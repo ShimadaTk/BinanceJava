@@ -1,4 +1,4 @@
-package Exception;
+package Exchange;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,9 +6,8 @@ import java.util.Map;
 
 import com.binance.api.client.domain.market.BookTicker;
 
-public class BinanceETH implements BinanceEx{
+public class BinanceBTC implements BinanceEx{
 
-	
 	private BinanceData data;
 	private Map<String, Integer> accessNum = new HashMap<>();
 	
@@ -16,17 +15,27 @@ public class BinanceETH implements BinanceEx{
 	 * コンストラクタ
 	 * 更新を楽にするために、「accessNum」に該当する通貨ペアの板情報を格納する。
 	 */
-	public BinanceETH(BinanceData data){
+	public BinanceBTC(BinanceData data){
 		this.data = data;
 		List<BookTicker> allBook = data.getClient().getBookTickers();
 		for(int i = 0; i < allBook.size(); i++){
 			if((allBook.get(i).getSymbol()).equals("ETHBTC")){
-				accessNum.put("BTC", i);
+				accessNum.put("ETH", i);
 			}
-			else if((allBook.get(i).getSymbol()).equals("IOTAETH")){
+			else if((allBook.get(i).getSymbol()).equals("IOTABTC")){
 				accessNum.put("IOTA", i);
 			}
 		}
+	/*	for (String key:BTCMap.keySet()){
+			if(key.equals("IOTABTC")){
+				System.out.println(key);
+			}
+			else if(key.equals("EtHBTC")){
+				System.out.println(key);
+			}
+		}
+		System.out.println("Mapサイズ:"+BTCMap.size());
+		*/
 	}
 	
 	/**
@@ -37,10 +46,10 @@ public class BinanceETH implements BinanceEx{
 		// TODO 自動生成されたメソッド・スタブ
 		try{
 			List<BookTicker> allBook = data.getClient().getBookTickers();
-			Double value = Double.parseDouble(allBook.get(accessNum.get("BTC")).getAskPrice());
-			data.getETHMap().put("BTC",  (1/value)*0.999);
+			Double value = Double.parseDouble(allBook.get(accessNum.get("ETH")).getBidPrice());
+			data.getBTCMap().put("ETH", value*0.999);
 			value = Double.parseDouble(allBook.get(accessNum.get("IOTA")).getBidPrice());
-			data.getETHMap().put("IOTA", value*0.999);
+			data.getBTCMap().put("IOTA", value*0.999);
 			//エラー発生時
 			}catch(Exception e){
 				e.printStackTrace();
@@ -48,7 +57,6 @@ public class BinanceETH implements BinanceEx{
 			return;
 	}
 
-	
 	@Override
 	public void transition() {
 		// TODO 自動生成されたメソッド・スタブ

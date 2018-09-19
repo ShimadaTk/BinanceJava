@@ -2,8 +2,8 @@ package OperationcCheck;
 
 import java.util.List;
 
-import Exception.BinanceBTC;
-import Exception.BinanceData;
+import Exchange.BinanceBTC;
+import Exchange.BinanceData;
 
 import com.binance.api.client.BinanceApiClientFactory;
 import com.binance.api.client.BinanceApiRestClient;

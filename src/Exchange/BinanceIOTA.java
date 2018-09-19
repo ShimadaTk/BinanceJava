@@ -1,4 +1,4 @@
-package Exception;
+package Exchange;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,8 +6,9 @@ import java.util.Map;
 
 import com.binance.api.client.domain.market.BookTicker;
 
-public class BinanceBTC implements BinanceEx{
+public class BinanceIOTA implements BinanceEx{
 
+	
 	private BinanceData data;
 	private Map<String, Integer> accessNum = new HashMap<>();
 	
@@ -15,29 +16,18 @@ public class BinanceBTC implements BinanceEx{
 	 * コンストラクタ
 	 * 更新を楽にするために、「accessNum」に該当する通貨ペアの板情報を格納する。
 	 */
-	public BinanceBTC(BinanceData data){
+	public BinanceIOTA(BinanceData data){
 		this.data = data;
 		List<BookTicker> allBook = data.getClient().getBookTickers();
 		for(int i = 0; i < allBook.size(); i++){
-			if((allBook.get(i).getSymbol()).equals("ETHBTC")){
+			if((allBook.get(i).getSymbol()).equals("IOTABTC")){
+				accessNum.put("BTC", i);
+			}
+			else if((allBook.get(i).getSymbol()).equals("IOTAETH")){
 				accessNum.put("ETH", i);
 			}
-			else if((allBook.get(i).getSymbol()).equals("IOTABTC")){
-				accessNum.put("IOTA", i);
-			}
 		}
-	/*	for (String key:BTCMap.keySet()){
-			if(key.equals("IOTABTC")){
-				System.out.println(key);
-			}
-			else if(key.equals("EtHBTC")){
-				System.out.println(key);
-			}
-		}
-		System.out.println("Mapサイズ:"+BTCMap.size());
-		*/
 	}
-	
 	/**
 	 * 各ノード間の重みを計算、格納
 	 */
@@ -46,10 +36,10 @@ public class BinanceBTC implements BinanceEx{
 		// TODO 自動生成されたメソッド・スタブ
 		try{
 			List<BookTicker> allBook = data.getClient().getBookTickers();
-			Double value = Double.parseDouble(allBook.get(accessNum.get("ETH")).getBidPrice());
-			data.getBTCMap().put("ETH", value*0.999);
-			value = Double.parseDouble(allBook.get(accessNum.get("IOTA")).getBidPrice());
-			data.getBTCMap().put("IOTA", value*0.999);
+			Double value = Double.parseDouble(allBook.get(accessNum.get("BTC")).getAskPrice());
+			data.getIOTAMap().put("BTC", (1/value)*0.999);
+			value = Double.parseDouble(allBook.get(accessNum.get("ETH")).getAskPrice());
+			data.getIOTAMap().put("ETH", (1/value)*0.999);
 			//エラー発生時
 			}catch(Exception e){
 				e.printStackTrace();
@@ -57,6 +47,7 @@ public class BinanceBTC implements BinanceEx{
 			return;
 	}
 
+	
 	@Override
 	public void transition() {
 		// TODO 自動生成されたメソッド・スタブ
