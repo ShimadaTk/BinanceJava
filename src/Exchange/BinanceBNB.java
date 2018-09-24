@@ -6,7 +6,7 @@ import java.util.Map;
 
 import com.binance.api.client.domain.market.BookTicker;
 
-public class BinanceBTC implements BinanceEx{
+public class BinanceBNB implements BinanceEx{
 
 	private BinanceData data;
 	private Map<String, Integer> accessNum = new HashMap<>();
@@ -15,17 +15,17 @@ public class BinanceBTC implements BinanceEx{
 	 * コンストラクタ
 	 * 更新を楽にするために、「accessNum」に該当する通貨ペアの板情報を格納する。
 	 */
-	public BinanceBTC(BinanceData data){
+	public BinanceBNB(BinanceData data){
 		this.data = data;
 		List<BookTicker> allBook = data.getClient().getBookTickers();
 		for(int i = 0; i < allBook.size(); i++){
-			if((allBook.get(i).getSymbol()).equals("ETHBTC")){
+			if((allBook.get(i).getSymbol()).equals("BNBBTC")){
+				accessNum.put("BTC", i);
+			}
+			else if((allBook.get(i).getSymbol()).equals("BNBETH")){
 				accessNum.put("ETH", i);
 			}
-			else if((allBook.get(i).getSymbol()).equals("BNBBTC")){
-				accessNum.put("BNB", i);
-			}
-			else if((allBook.get(i).getSymbol()).equals("IOTABTC")){
+			else if((allBook.get(i).getSymbol()).equals("IOTABNB")){
 				accessNum.put("IOTA", i);
 			}
 		}
@@ -52,12 +52,12 @@ public class BinanceBTC implements BinanceEx{
 		 */
 		try{
 			List<BookTicker> allBook = data.getClient().getBookTickers();
-			Double value = Double.parseDouble(allBook.get(accessNum.get("ETH")).getAskPrice());
-			data.getBTCMap().put("ETH", (1/value)*0.999);
-			value = Double.parseDouble(allBook.get(accessNum.get("BNB")).getAskPrice());
-			data.getBTCMap().put("BNB", (1/value)*0.999);
+			Double value = Double.parseDouble(allBook.get(accessNum.get("BTC")).getBidPrice());
+			data.getBNBMap().put("BTC", value*0.999);
+			value = Double.parseDouble(allBook.get(accessNum.get("ETH")).getBidPrice());
+			data.getBNBMap().put("ETH", value*0.999);
 			value = Double.parseDouble(allBook.get(accessNum.get("IOTA")).getAskPrice());
-			data.getBTCMap().put("IOTA", (1/value)*0.999);
+			data.getBNBMap().put("IOTA", (1/value)*0.999);
 			//エラー発生時
 			}catch(Exception e){
 				e.printStackTrace();

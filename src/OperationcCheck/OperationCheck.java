@@ -1,6 +1,7 @@
 package OperationcCheck;
 
 import java.util.List;
+import java.util.Scanner;
 
 import Exchange.BinanceBTC;
 import Exchange.BinanceData;
@@ -35,6 +36,7 @@ public class OperationCheck {
 		 **/
 		List<BookTicker> a = client.getBookTickers();
 		System.out.println(a);
+		System.out.println(a.size());
 		/**
 		 * 板のListの４番目の通貨ペアの売り注文と買い注文
 		 **/
@@ -44,33 +46,6 @@ public class OperationCheck {
 		System.out.println("買い板"+a.get(3).getBidPrice()+"Bid");
 		//通貨のペア
 		System.out.println(a.get(0).getSymbol());
-		
-		System.out.println("\n以降、自作クラステスト");
-		BinanceData Data = new BinanceData();
-		Data.getBTC().exchange();
-		System.out.println(Data.getBTCMap().get("IOTA")+"  BTC→IOTA");
-		System.out.println(Data.getBTCMap().get("ETH")+"  BTC→ETH");
-		Thread.sleep(5000);
-		Data.getBTC().exchange();
-		System.out.println(Data.getBTCMap().get("IOTA")+"  BTC→IOTA");
-		System.out.println(Data.getBTCMap().get("ETH")+"  BTC→ETH");
-		Thread.sleep(5000);
-		Data.getETH().exchange();
-		System.out.println(Data.getETHMap().get("BTC")+"  ETH→BTC");
-		System.out.println(Data.getETHMap().get("IOTA")+"  ETH→IOTA");
-		Thread.sleep(5000);
-		Data.getETH().exchange();
-		System.out.println(Data.getETHMap().get("BTC")+"  ETH→BTC");
-		System.out.println(Data.getETHMap().get("IOTA")+"  ETH→IOTA");
-		Thread.sleep(5000);
-		
-		Data.getIOTA().exchange();
-		System.out.println(Data.getIOTAMap().get("BTC")+"  IOTA→BTC");
-		System.out.println(Data.getIOTAMap().get("ETH")+"  IOTA→ETH");
-		Thread.sleep(5000);
-		Data.getIOTA().exchange();
-		System.out.println(Data.getIOTAMap().get("BTC")+"  IOTA→BTC");
-		System.out.println(Data.getIOTAMap().get("ETH")+"  IOTA→ETH");
 		
 		
 		System.out.println("実行しました。");

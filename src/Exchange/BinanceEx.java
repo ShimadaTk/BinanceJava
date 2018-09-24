@@ -20,6 +20,6 @@ public interface BinanceEx {
 	public void transition3();
 
 	//第5ノードを決定する(必ず帰ってくる)
-	public void transition4();
+//	public void transition4();
 
 }
