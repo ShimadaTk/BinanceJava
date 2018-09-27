@@ -51,6 +51,9 @@ public class BinanceIOTA implements BinanceEx{
 			//エラー発生時
 			}catch(Exception e){
 				e.printStackTrace();
+				data.getIOTAMap().put("BTC", 0.0);
+				data.getIOTAMap().put("ETH", 0.0);
+				data.getIOTAMap().put("BNB", 0.0);
 			}		
 			return;
 	}

@@ -55,6 +55,9 @@ public class BinanceETH implements BinanceEx{
 			//エラー発生時
 			}catch(Exception e){
 				e.printStackTrace();
+				data.getETHMap().put("BTC", 0.0);
+				data.getETHMap().put("BNB", 0.0);
+				data.getETHMap().put("IOTA", 0.0);
 			}		
 			return;
 	}
